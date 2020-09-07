@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Converter</string>
+    <string name="category_type">Choose category!</string>
+    <string name="distance_category">Distance converter</string>
+    <string name="weight_category">Weight converter</string>
+    <string name="currency_category">Currency converter</string>
+
+    <string name="number_zero">0</string>
+    <string name="number_one">1</string>
+    <string name="number_two">2</string>
+    <string name="number_three">3</string>
+    <string name="number_four">4</string>
+    <string name="number_five">5</string>
+    <string name="number_six">6</string>
+    <string name="number_seven">7</string>
+    <string name="number_eight">8</string>
+    <string name="number_nine">9</string>
+    <string name="btn_clear">Clear</string>
+    <string name="btn_dot">.</string>
+    <string name="btn_done">Done</string>
+    <string name="change_places">Change places</string>
+    <string name="save_to_clickboard">Save to clickboard</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

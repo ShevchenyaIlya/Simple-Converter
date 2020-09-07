@@ -1,0 +1,90 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 30
+    buildToolsVersion "30.0.2"
+
+    defaultConfig {
+        applicationId "com.example.myapplication"
+        minSdkVersion 23
+        targetSdkVersion 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "version"
+    productFlavors {
+        demo {
+            dimension "version"
+            applicationIdSuffix ".demo"
+            versionNameSuffix "-demo"
+        }
+        full {
+            dimension "version"
+            applicationIdSuffix ".full"
+            versionNameSuffix "-full"
+        }
+    }
+}
+
+def getPatch() {
+    def diffOutput = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe'
+        standardOutput = diffOutput
+    }
+    def res = diffOutput.toString()
+    if (res.contains('-')) {
+        return res.split('-')[1]
+    } else {
+        return '0'
+    }
+}
+
+def getLastTag() {
+    def tagsOutput = new ByteArrayOutputStream()
+    exec {
+        commandLine 'git', 'describe'
+        standardOutput = tagsOutput
+    }
+    def res = tagsOutput.toString()
+    if (res.contains('-')) {
+        return res.split('-').first()
+    } else {
+        return '0.0'
+    }
+}
+
+static def generateVersionCode(String tag, String patch) {
+    def dot = tag.indexOf('.')
+    def major = tag.substring(0, dot).toInteger()
+    def minor = tag.substring(dot + 1).toInteger()
+    def res = (major*10 + minor.toInteger())*100 + patch.toInteger()
+    return res
+}
+//
+//ext {
+//    getPatch = this.&getPatch
+//    getLastTag = this.&getLastTag
+//    generateVersionCode = this.&generateVersionCode
+//}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+}

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.example.myapplication.full",
+  "variantName": "fullDebug",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "properties": [],
+      "versionCode": 1,
+      "versionName": "1.0-full",
+      "enabled": true,
+      "outputFile": "app-full-debug.apk"
+    }
+  ]
+}
