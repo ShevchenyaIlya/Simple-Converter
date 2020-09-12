@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ClipData;
@@ -40,12 +41,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         spinner_from = (Spinner) findViewById(R.id.first_spinner);
         spinner_to = (Spinner) findViewById(R.id.second_spinner);
 
+        if (savedInstanceState != null) {
+            setWidgetsConfigurations(savedInstanceState.getCharSequence("converterCategory"));
+            spinner_from.setSelection(((ArrayAdapter) spinner_from.getAdapter()).getPosition(savedInstanceState.getString("leftSpinner")));
+            spinner_to.setSelection(((ArrayAdapter) spinner_to.getAdapter()).getPosition(savedInstanceState.getString("rightSpinner")));
+            mainTextView.setText(savedInstanceState.getString("logoViewContent"));
+            editText1.setText(savedInstanceState.getString("editText1"));
+            editText2.setText(savedInstanceState.getString("editText2"));
+        }
+
         editText1.setInputType(InputType.TYPE_NULL);
         editText1.setTextIsSelectable(true);
 
         editText2.setInputType(InputType.TYPE_NULL);
         editText2.setTextIsSelectable(true);
         initViews();
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("leftSpinner", spinner_from.getSelectedItem().toString());
+        outState.putString("rightSpinner", spinner_to.getSelectedItem().toString());
+        outState.putString("logoViewContent", mainTextView.getText().toString());
+        outState.putCharSequence("converterCategory", converterCategory);
+        outState.putString("editText1", editText1.getText().toString());
+        outState.putString("editText2", editText2.getText().toString());
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        spinner_from.setSelection(((ArrayAdapter) spinner_from.getAdapter()).getPosition(savedInstanceState.getString("leftSpinner")));
+        spinner_to.setSelection(((ArrayAdapter) spinner_to.getAdapter()).getPosition(savedInstanceState.getString("rightSpinner")));
+        mainTextView.setText(savedInstanceState.getString("logoViewContent"));
+        editText1.setText(savedInstanceState.getString("editText1"));
+        editText2.setText(savedInstanceState.getString("editText2"));
     }
 
     @Override
@@ -107,12 +139,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Toast.makeText(this, item.getTitle(), Toast.LENGTH_LONG).show();
         CharSequence title = item.getTitle();
+
+        setWidgetsConfigurations(title);
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void setWidgetsConfigurations(CharSequence title) {
 
         if ("Distance".contentEquals(title)) {
             mainTextView.setText(R.string.distance_category);
@@ -151,8 +187,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             spinner_to.setAdapter(adapter);
         }
         converterCategory = title;
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void swapValuesClick(View view) {
