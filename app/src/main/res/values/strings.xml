@@ -4,7 +4,9 @@
     <string name="distance_category">Distance converter</string>
     <string name="weight_category">Weight converter</string>
     <string name="currency_category">Currency converter</string>
-
+    <string name="currency">Currency</string>
+    <string name="weight">Weight</string>
+    <string name="distance">Distance</string>
     <string name="number_zero">0</string>
     <string name="number_one">1</string>
     <string name="number_two">2</string>

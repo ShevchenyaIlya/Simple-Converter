@@ -29,6 +29,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Spinner spinner_from;
     Spinner spinner_to;
 
+    String[] distanceSpinner = new String[] {"Arshin", "Meters", "Miles"};
+    String[] weightSpinner = new String[] {"Grams", "Pounds", "Ounce"};
+    String[] currencySpinner = new String[] {"BYN", "RUB", "USD", "EUR"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,9 +86,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public boolean onCreateOptionsMenu (Menu menu) {
-        menu.add("Distance");
-        menu.add("Weight");
-        menu.add("Currency");
+        menu.add(R.string.distance);
+        menu.add(R.string.weight);
+        menu.add(R.string.currency);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -104,8 +108,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.key_done).setOnClickListener(this);
         findViewById(R.id.key_dot).setOnClickListener(this);
     }
-
-
 
     @Override
     public void onClick(View view) {
@@ -143,49 +145,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         Toast.makeText(this, item.getTitle(), Toast.LENGTH_LONG).show();
         CharSequence title = item.getTitle();
-
         setWidgetsConfigurations(title);
         return super.onOptionsItemSelected(item);
     }
 
     public void setWidgetsConfigurations(CharSequence title) {
+        ArrayAdapter<String> adapter;
 
         if ("Distance".contentEquals(title)) {
             mainTextView.setText(R.string.distance_category);
-
-            String[] distanceSpinner = new String[] {
-                    "Meters", "Kilometers", "Miles",
-            };
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+            adapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, distanceSpinner);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_from.setAdapter(adapter);
-            spinner_to.setAdapter(adapter);
-
         } else if ("Weight".contentEquals(title)) {
             mainTextView.setText(R.string.weight_category);
-
-            String[] distanceSpinner = new String[] {
-                    "Grams", "Kilograms", "Pounds",
-            };
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                    android.R.layout.simple_spinner_item, distanceSpinner);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_from.setAdapter(adapter);
-            spinner_to.setAdapter(adapter);
-
-        } else if ("Currency".contentEquals(title)) {
+            adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item, weightSpinner);
+        } else {
             mainTextView.setText(R.string.currency_category);
-
-            String[] currencySpinner = new String[] {
-                    "BYN", "RUB", "USD", "EUR"
-            };
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+            adapter = new ArrayAdapter<String>(this,
                     android.R.layout.simple_spinner_item, currencySpinner);
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-            spinner_from.setAdapter(adapter);
-            spinner_to.setAdapter(adapter);
         }
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_from.setAdapter(adapter);
+        spinner_to.setAdapter(adapter);
         converterCategory = title;
     }
 
