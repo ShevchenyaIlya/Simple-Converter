@@ -23,6 +23,14 @@ static def generateVersionCode(String tag) {
 def tag = getLastTag()
 
 android {
+    signingConfigs {
+        debug {
+            keyAlias 'upload'
+            storePassword 'Sheva07012001'
+            storeFile file('/home/shevchenya/AndroidStudioProjects/secret_key.jks')
+            keyPassword 'Sheva07012001'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
@@ -34,6 +42,7 @@ android {
         versionName tag.replace("\n", "")
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.debug
     }
 
     buildTypes {
@@ -54,6 +63,12 @@ android {
             dimension "version"
             applicationIdSuffix ".full"
             versionNameSuffix "-full"
+        }
+        customer1 {
+
+        }
+        customer2 {
+            
         }
     }
 }
